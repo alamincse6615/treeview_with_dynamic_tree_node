@@ -4,6 +4,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_tree_demo/model.dart';
 import 'package:animated_tree_view/animated_tree_view.dart';
+import 'package:restart_app/restart_app.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 void main() {
@@ -144,17 +145,9 @@ class _MyHomePageState extends State<MyHomePage> {
             expansionBehavior: ExpansionBehavior.collapseOthersAndSnapToTop,
             shrinkWrap: false,
             showRootNode: false,
-
-            // expansionIndicatorBuilder: (context, node) => ChevronIndicator.rightDown(
-            //   tree: node,
-            //   color: Colors.blue[700],
-            //   padding: const EdgeInsets.all(8),
-            // ),
             indentation: Indentation(
               width: 20,
               offset: Offset.fromDirection(20),
-             // style: IndentStyle.scopingLine,
-              //style: IndentStyle.squareJoint,
               style: IndentStyle.roundJoint,
             ),
             expansionIndicatorBuilder: (context, node) => ChevronIndicator.upDown(
@@ -164,7 +157,6 @@ class _MyHomePageState extends State<MyHomePage> {
             ),
 
             onItemTap: (item) {
-              //onSelectedNode(item.data!.code);
               if (kDebugMode) print("Item tapped: ${item.data!.code}");
 
             },
@@ -191,6 +183,8 @@ class _MyHomePageState extends State<MyHomePage> {
                             setState(() async{
                               await prefs!.setString('path',_node.path);
                               selectedMHNode = _node;
+                              Restart.restartApp();
+
                             });
                           }, child: const Text("Show",)),
                     )),
